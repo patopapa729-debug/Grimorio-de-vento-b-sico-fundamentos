@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meu RPG</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #15141b;
+  color: #eeeaf5;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  background: #211e2b;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #514663;
+}
+
+header h1 {
+  margin: 0;
+  color: #c5a5ff;
+}
+
+nav {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  overflow-x: auto;
+  background: #211e2b;
+}
+
+button {
+  background: #393044;
+  color: white;
+  border: 1px solid #65547b;
+  border-radius: 8px;
+  padding: 11px 15px;
+  cursor: pointer;
+}
+
+button.active {
+  background: #7755a6;
+}
+
+main {
+  padding: 16px;
+}
+
+.pagina {
+  display: none;
+}
+
+.pagina.active {
+  display: block;
+}
+
+.card {
+  background: #211e2b;
+  padding: 16px;
+  border: 1px solid #393044;
+  border-radius: 12px;
+  margin-bottom: 14px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 7px 0 14px;
+  border-radius: 7px;
+  border: 1px solid #65547b;
+  background: #15141b;
+  color: white;
+}
+
+h2 {
+  color: #c5a5ff;
+}
+
+.item {
+  padding: 10px;
+  border-bottom: 1px solid #514663;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Meu RPG</h1>
+  <p>Sua aventura começa aqui.</p>
+</header>
+
+<nav>
+  <button class="active" onclick="abrir('inicio',this)">Início</button>
+  <button onclick="abrir('ficha',this)">Ficha</button>
+  <button onclick="abrir('habilidades',this)">Habilidades</button>
+  <button onclick="abrir('inventario',this)">Inventário</button>
+</nav>
+
+<main>
+
+<section id="inicio" class="pagina active">
+  <div class="card">
+    <h2>Bem-vindo ao seu RPG!</h2>
+    <p>Gerencie seus personagens e prepare suas aventuras.</p>
+  </div>
+</section>
+
+<section id="ficha" class="pagina">
+  <div class="card">
+    <h2>Ficha do personagem</h2>
+
+    <label>Nome:</label>
+    <input id="nome" placeholder="Nome do personagem">
+
+    <label>Classe:</label>
+    <input id="classe" placeholder="Ex: Guerreiro">
+
+    <label>Nível:</label>
+    <input id="nivel" type="number" value="1">
+
+    <label>Vida:</label>
+    <input id="vida" type="number" value="100">
+
+    <button onclick="salvarFicha()">Salvar ficha</button>
+  </div>
+</section>
+
+<section id="habilidades" class="pagina">
+  <div class="card">
+    <h2>Habilidades</h2>
+    <input id="novaHabilidade" placeholder="Nome da habilidade">
+    <button onclick="adicionar('novaHabilidade','listaHabilidades')">Adicionar</button>
+    <div id="listaHabilidades"></div>
+  </div>
+</section>
+
+<section id="inventario" class="pagina">
+  <div class="card">
+    <h2>Inventário</h2>
+    <input id="novoItem" placeholder="Nome do item">
+    <button onclick="adicionar('novoItem','listaItens')">Adicionar item</button>
+    <div id="listaItens"></div>
+  </div>
+</section>
+
+</main>
+
+<script>
+function abrir(id, botao) {
+  document.querySelectorAll('.pagina').forEach(p => {
+    p.classList.remove('active');
+  });
+
+  document.querySelectorAll('nav button').forEach(b => {
+    b.classList.remove('active');
+  });
+
+  document.getElementById(id).classList.add('active');
+  botao.classList.add('active');
+}
+
+function salvarFicha() {
+  const ficha = {
+    nome: document.getElementById('nome').value,
+    classe: document.getElementById('classe').value,
+    nivel: document.getElementById('nivel').value,
+    vida: document.getElementById('vida').value
+  };
+
+  localStorage.setItem('minhaFicha', JSON.stringify(ficha));
+  alert('Ficha salva!');
+}
+
+function carregarFicha() {
+  const ficha = JSON.parse(localStorage.getItem('minhaFicha'));
+
+  if (!ficha) return;
+
+  document.getElementById('nome').value = ficha.nome || '';
+  document.getElementById('classe').value = ficha.classe || '';
+  document.getElementById('nivel').value = ficha.nivel || 1;
+  document.getElementById('vida').value = ficha.vida || 100;
+}
+
+function adicionar(campoId, listaId) {
+  const campo = document.getElementById(campoId);
+  const nome = campo.value.trim();
+
+  if (!nome) return;
+
+  const lista = document.getElementById(listaId);
+  const item = document.createElement('div');
+
+  item.className = 'item';
+  item.textContent = nome;
+
+  lista.appendChild(item);
+  campo.value = '';
+
+  salvarListas();
+}
+
+function salvarListas() {
+  const dados = {
+    habilidades: [...document.querySelectorAll('#listaHabilidades .item')].map(e => e.textContent),
+    itens: [...document.querySelectorAll('#listaItens .item')].map(e => e.textContent)
+  };
+
+  localStorage.setItem('listasRPG', JSON.stringify(dados));
+}
+
+function carregarListas() {
+  const dados = JSON.parse(localStorage.getItem('listasRPG') || '{}');
+
+  (dados.habilidades || []).forEach(nome => {
+    adicionarCarregado(nome, 'listaHabilidades');
+  });
+
+  (dados.itens || []).forEach(nome => {
+    adicionarCarregado(nome, 'listaItens');
+  });
+}
+
+function adicionarCarregado(nome, listaId) {
+  const item = document.createElement('div');
+  item.className = 'item';
+  item.textContent = nome;
+  document.getElementById(listaId).appendChild(item);
+}
+
+carregarFicha();
+carregarListas();
+</script>
+
+</body>
+</html>

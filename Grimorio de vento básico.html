@@ -1,0 +1,740 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grimório de Vento</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 20px 12px;
+  background:
+    radial-gradient(circle at center, #304b5b, #101820 80%);
+  color: #e8e6dc;
+  font-family: Georgia, serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 680px;
+  text-align: center;
+}
+
+.book {
+  position: relative;
+  width: 100%;
+  min-height: 510px;
+  border: 9px solid #59452d;
+  border-radius: 8px 18px 18px 8px;
+  background: #d8c9a7;
+  box-shadow:
+    0 15px 45px #000a,
+    inset 5px 0 10px #796344;
+  overflow: hidden;
+  perspective: 1200px;
+}
+
+.page {
+  min-height: 492px;
+  padding: 28px;
+  text-align: left;
+  color: #342d24;
+  background:
+    linear-gradient(90deg,
+      #bca981,
+      #e9ddbd 12%,
+      #eee2c3 88%,
+      #c7b58e);
+  animation: appear .35s ease;
+}
+
+.cover {
+  min-height: 492px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #dcebf0;
+  background:
+    radial-gradient(circle, #426a80, #142a3a 75%);
+  border: 5px double #b8a477;
+}
+
+.cover h1 {
+  font-size: clamp(30px, 8vw, 48px);
+  letter-spacing: 4px;
+  text-shadow: 0 0 15px #8cc8e5;
+}
+
+.cover h3 {
+  color: #d2e3eb;
+}
+
+.cover-symbol {
+  font-size: 85px;
+  color: #c9e6f1;
+  text-shadow: 0 0 20px #8cc8e5;
+}
+
+h2 {
+  color: #37566a;
+  text-align: center;
+  font-size: 23px;
+  border-bottom: 2px solid #a28b60;
+  padding-bottom: 12px;
+}
+
+h3 {
+  color: #45677b;
+  margin-top: 22px;
+}
+
+p, li {
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.magic-word {
+  background: #d0dcd7;
+  border-left: 4px solid #426d80;
+  padding: 12px;
+  margin: 12px 0;
+  border-radius: 4px;
+}
+
+.spell {
+  background: #e0d5b9;
+  border: 1px solid #a28b60;
+  padding: 12px;
+  margin: 13px 0;
+  border-radius: 6px;
+}
+
+.spell strong {
+  color: #365a70;
+}
+
+.symbol {
+  text-align: center;
+  font-size: 40px;
+  color: #416b83;
+}
+
+.page-number {
+  text-align: right;
+  margin-top: 25px;
+  color: #806c4c;
+  font-style: italic;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+button {
+  background: #304e60;
+  color: white;
+  border: 1px solid #9eb5c1;
+  padding: 13px 17px;
+  border-radius: 7px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #52778b;
+}
+
+button:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+}
+
+.counter {
+  color: #d5e0e4;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+@keyframes appear {
+  from {
+    opacity: .2;
+    transform: rotateY(-12deg);
+  }
+  to {
+    opacity: 1;
+    transform: rotateY(0);
+  }
+}
+
+@media(max-width: 480px) {
+  .book {
+    min-height: 530px;
+  }
+
+  .page, .cover {
+    min-height: 512px;
+  }
+
+  .page {
+    padding: 19px;
+  }
+
+  h2 {
+    font-size: 19px;
+  }
+
+  p, li {
+    font-size: 14px;
+  }
+
+  button {
+    padding: 12px 10px;
+    font-size: 12px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="book">
+    <div id="page" class="cover">
+
+      <div class="cover-symbol">༄</div>
+
+      <h1>GRIMÓRIO<br>DE VENTO</h1>
+
+      <h3>Volume I — Fundamentos</h3>
+
+      <p>
+        O conhecimento daqueles que seguem<br>
+        o caminho dos ventos.
+      </p>
+
+      <p>✧ Edição dos Aprendizes ✧</p>
+
+    </div>
+  </div>
+
+  <div class="controls">
+
+    <button id="previous" onclick="previousPage()">
+      ◀ Anterior
+    </button>
+
+    <button id="next" onclick="nextPage()">
+      Próxima ▶
+    </button>
+
+  </div>
+
+  <div class="counter" id="counter">
+    Capa — Grimório de Vento
+  </div>
+
+</div>
+
+<script>
+
+// ===================================
+// CONTEÚDO DO GRIMÓRIO
+// ===================================
+
+const pages = [
+
+{
+title: "CAPÍTULO I — A MAGIA DO VENTO",
+content: `
+<p>
+A magia do vento é uma arte elemental que representa
+o domínio fantástico do elemento Ar.
+</p>
+
+<h3>O que é a Aeromancia?</h3>
+
+<p>
+Aeromancia é o nome dado à prática fictícia de
+manipulação do vento através de energia mágica.
+Seus praticantes são chamados de Aeromantes.
+</p>
+
+<h3>Os cinco fundamentos</h3>
+
+<ul>
+<li><b>Movimento:</b> deslocamento do ar.</li>
+<li><b>Velocidade:</b> rapidez das correntes.</li>
+<li><b>Pressão:</b> intensidade do vento.</li>
+<li><b>Direção:</b> orientação da corrente.</li>
+<li><b>Controle:</b> domínio da manifestação mágica.</li>
+</ul>
+
+<p>
+Toda magia de vento começa com o entendimento
+dessas cinco características.
+</p>
+`
+},
+
+{
+title: "CAPÍTULO II — AS LEIS DO VENTO",
+content: `
+<h3>Primeira Lei — Movimento</h3>
+<p>O vento representa movimento e transformação.</p>
+
+<h3>Segunda Lei — Direção</h3>
+<p>Toda corrente possui uma direção definida.</p>
+
+<h3>Terceira Lei — Intensidade</h3>
+<p>O vento pode ser representado desde uma brisa
+até uma tempestade.</p>
+
+<h3>Quarta Lei — Concentração</h3>
+<p>A energia mágica pode ser concentrada em
+uma manifestação específica.</p>
+
+<h3>Quinta Lei — Equilíbrio</h3>
+<p>O domínio do ar exige equilíbrio entre
+velocidade, força e estabilidade.</p>
+
+<h3>Sexta Lei — Liberdade</h3>
+<p>O vento não possui uma forma única.
+Ele pode ser representado por diferentes manifestações.</p>
+`
+},
+
+{
+title: "CAPÍTULO III — DICIONÁRIO MÁGICO",
+content: `
+<p>Palavras utilizadas na linguagem mágica
+fictícia dos Aeromantes.</p>
+
+<div class="magic-word">
+<b>AER</b> — Ar.
+</div>
+
+<div class="magic-word">
+<b>VENTUS</b> — Vento.
+</div>
+
+<div class="magic-word">
+<b>ZEPHYR</b> — Brisa.
+</div>
+
+<div class="magic-word">
+<b>TORN</b> — Giro.
+</div>
+
+<div class="magic-word">
+<b>CAELUM</b> — Céu.
+</div>
+
+<div class="magic-word">
+<b>VAYRA</b> — Manipulação.
+</div>
+
+<div class="magic-word">
+<b>SYLPH</b> — Espírito do vento.
+</div>
+
+<div class="magic-word">
+<b>ALERION</b> — Liberdade.
+</div>
+
+<div class="magic-word">
+<b>FULGAR</b> — Intensidade.
+</div>
+
+<div class="magic-word">
+<b>AERIS</b> — Essência do ar.
+</div>
+
+<div class="magic-word">
+<b>VENTARA</b> — Corrente elemental.
+</div>
+`
+},
+
+{
+title: "CAPÍTULO IV — FRASES MÁGICAS",
+content: `
+<div class="spell">
+<strong>Aer Ventus</strong>
+<p>Despertar do vento.</p>
+</div>
+
+<div class="spell">
+<strong>Zephyr Alerion</strong>
+<p>Brisa da liberdade.</p>
+</div>
+
+<div class="spell">
+<strong>Vayra Caelum</strong>
+<p>Poder do céu.</p>
+</div>
+
+<div class="spell">
+<strong>Ventus Torn</strong>
+<p>Giro dos ventos.</p>
+</div>
+
+<div class="spell">
+<strong>Aeris Protectum</strong>
+<p>Proteção do ar.</p>
+</div>
+
+<div class="spell">
+<strong>Sylph Ventara</strong>
+<p>Espírito da corrente elemental.</p>
+</div>
+
+<p>
+Essas expressões são palavras inventadas
+para o sistema mágico do RPG.
+</p>
+`
+},
+
+{
+title: "CAPÍTULO V — PRIMEIRAS MAGIAS",
+content: `
+<div class="spell">
+<strong>✧ 1. Brisa Elemental</strong>
+<p>Rank: F</p>
+<p>Tipo: Controle.</p>
+<p>Efeito: Cria uma pequena corrente mágica de vento.</p>
+<p>Custo: 2 Mana.</p>
+</div>
+
+<div class="spell">
+<strong>✧ 2. Sopro do Norte</strong>
+<p>Rank: F</p>
+<p>Tipo: Elemental.</p>
+<p>Efeito: Produz uma rajada suave de ar.</p>
+<p>Custo: 3 Mana.</p>
+</div>
+
+<div class="spell">
+<strong>✧ 3. Passo Leve</strong>
+<p>Rank: F</p>
+<p>Tipo: Mobilidade.</p>
+<p>Efeito: Concede um pequeno impulso mágico
+ao deslocamento do personagem.</p>
+<p>Custo: 4 Mana.</p>
+</div>
+
+<div class="spell">
+<strong>✧ 4. Escudo de Ar</strong>
+<p>Rank: F</p>
+<p>Tipo: Defesa.</p>
+<p>Efeito: Cria uma barreira mágica de vento.</p>
+<p>Custo: 5 Mana.</p>
+</div>
+`
+},
+
+{
+title: "CAPÍTULO VI — CONTROLE ELEMENTAL",
+content: `
+<h3>Manipulação básica</h3>
+
+<p>
+No universo fictício da Aeromancia, controlar
+o vento significa definir a forma, a direção
+e a intensidade de uma manifestação elemental.
+</p>
+
+<h3>As quatro formas iniciais</h3>
+
+<div class="spell">
+<b>1. Corrente</b>
+<p>Uma manifestação contínua de vento.</p>
+</div>
+
+<div class="spell">
+<b>2. Rajada</b>
+<p>Uma manifestação breve e concentrada.</p>
+</div>
+
+<div class="spell">
+<b>3. Espiral</b>
+<p>Uma corrente representada por movimentos circulares.</p>
+</div>
+
+<div class="spell">
+<b>4. Barreira</b>
+<p>Uma estrutura defensiva formada por energia elemental.</p>
+</div>
+`
+},
+
+{
+title: "CAPÍTULO VII — CÍRCULOS MÁGICOS",
+content: `
+<div class="symbol">◎</div>
+
+<h3>Círculo da Brisa</h3>
+<p>Representa magias leves e manifestações suaves.</p>
+
+<div class="symbol">◉</div>
+
+<h3>Círculo da Corrente</h3>
+<p>Representa movimento e controle elemental.</p>
+
+<div class="symbol">✧</div>
+
+<h3>Círculo da Liberdade</h3>
+<p>Representa expansão e mobilidade.</p>
+
+<div class="symbol">༄</div>
+
+<h3>Círculo da Tempestade</h3>
+<p>Representa força e intensidade.</p>
+
+<p>
+Os círculos são símbolos decorativos e elementos
+de ambientação do sistema mágico.
+</p>
+`
+},
+
+{
+title: "CAPÍTULO VIII — CRIANDO UMA MAGIA",
+content: `
+<p>Uma magia possui os seguintes fundamentos:</p>
+
+<h3>1. Nome</h3>
+<p>Identificação da habilidade.</p>
+
+<h3>2. Elemento</h3>
+<p>Vento, neste caso.</p>
+
+<h3>3. Encantamento</h3>
+<p>Palavra ou frase associada à habilidade.</p>
+
+<h3>4. Categoria</h3>
+<p>Ataque, defesa, suporte, controle ou mobilidade.</p>
+
+<h3>5. Efeito</h3>
+<p>O resultado produzido dentro do universo do RPG.</p>
+
+<h3>6. Custo</h3>
+<p>Quantidade de Mana necessária.</p>
+
+<div class="spell">
+<b>Exemplo:</b>
+<p>Nome: Lâmina de Brisa.</p>
+<p>Elemento: Vento.</p>
+<p>Encantamento: Aer Ventus.</p>
+<p>Categoria: Ataque.</p>
+<p>Efeito: Cria uma lâmina elemental fictícia.</p>
+<p>Custo: 5 Mana.</p>
+</div>
+`
+},
+
+{
+title: "CAPÍTULO IX — EXERCÍCIOS DO APRENDIZ",
+content: `
+<h3>Exercício I — Vocabulário</h3>
+<p>Aprenda o significado de todas as palavras mágicas.</p>
+
+<h3>Exercício II — Encantamentos</h3>
+<p>Crie três frases mágicas utilizando
+o dicionário deste grimório.</p>
+
+<h3>Exercício III — Imaginação</h3>
+<p>Descreva como seria uma barreira de vento
+no universo do seu personagem.</p>
+
+<h3>Exercício IV — Criação</h3>
+<p>Crie uma magia com nome, categoria,
+efeito e custo de Mana.</p>
+
+<h3>Exercício V — Combinação</h3>
+<p>Imagine uma habilidade que combine
+vento com outro elemento.</p>
+`
+},
+
+{
+title: "CAPÍTULO X — ENCERRAMENTO",
+content: `
+<div class="symbol">༄ ✧ 𓇢</div>
+
+<p>
+O caminho do vento representa liberdade,
+movimento, equilíbrio e transformação.
+</p>
+
+<p>
+Todo grande Aeromante começa aprendendo
+os fundamentos antes de dominar técnicas
+mais complexas.
+</p>
+
+<h3 style="text-align:center">
+FIM DO VOLUME I
+</h3>
+
+<p style="text-align:center">
+Próximo volume:<br>
+Grimório de Vento — Magias Intermediárias.
+</p>
+`
+}
+
+];
+
+// ===================================
+// SISTEMA DE PAGINAÇÃO
+// ===================================
+
+let currentPage = -1;
+let pageDirection = 1;
+let flipping = false;
+
+const pageElement = document.getElementById("page");
+const counter = document.getElementById("counter");
+
+function renderPage() {
+
+  if (currentPage === -1) {
+
+    pageElement.className = "cover";
+
+    pageElement.innerHTML = `
+      <div class="cover-symbol">༄</div>
+      <h1>GRIMÓRIO<br>DE VENTO</h1>
+      <h3>Volume I — Fundamentos</h3>
+      <p>O conhecimento daqueles que seguem<br>
+      o caminho dos ventos.</p>
+      <p>✧ Edição dos Aprendizes ✧</p>
+    `;
+
+    counter.textContent = "Capa — Grimório de Vento";
+
+  } else {
+
+    const p = pages[currentPage];
+
+    pageElement.className = "page";
+
+    pageElement.innerHTML = `
+      <h2>${p.title}</h2>
+      ${p.content}
+      <div class="page-number">
+        Página ${currentPage + 1}
+      </div>
+    `;
+
+    counter.textContent =
+      "Página " + (currentPage + 1) +
+      " de " + pages.length;
+  }
+
+  document.getElementById("previous").disabled =
+    currentPage === -1 || flipping;
+
+  document.getElementById("next").disabled =
+    currentPage === pages.length - 1 || flipping;
+}
+
+// ===================================
+// ANIMAÇÃO DE VIRAR PÁGINAS
+// ===================================
+
+function turnPage() {
+
+  if (flipping) return;
+
+  const next = currentPage + pageDirection;
+
+  if (next < -1 || next >= pages.length) return;
+
+  flipping = true;
+
+  document.getElementById("previous").disabled = true;
+  document.getElementById("next").disabled = true;
+
+  pageElement.style.transition = "transform .25s ease";
+
+  pageElement.style.transform =
+    pageDirection > 0
+      ? "rotateY(-15deg)"
+      : "rotateY(15deg)";
+
+  setTimeout(() => {
+
+    currentPage = next;
+
+    renderPage();
+
+    pageElement.style.transform = "rotateY(0deg)";
+
+    setTimeout(() => {
+
+      flipping = false;
+
+      document.getElementById("previous").disabled =
+        currentPage === -1;
+
+      document.getElementById("next").disabled =
+        currentPage === pages.length - 1;
+
+    }, 300);
+
+  }, 250);
+}
+
+function nextPage() {
+  pageDirection = 1;
+  turnPage();
+}
+
+function previousPage() {
+  pageDirection = -1;
+  turnPage();
+}
+
+// ===================================
+// TECLADO
+// ===================================
+
+document.addEventListener("keydown", function(event) {
+
+  if (event.key === "ArrowRight") {
+    nextPage();
+  }
+
+  if (event.key === "ArrowLeft") {
+    previousPage();
+  }
+
+});
+
+// INICIAR GRIMÓRIO
+
+renderPage();
+
+</script>
+
+</body>
+</html>

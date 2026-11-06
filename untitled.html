@@ -1,0 +1,525 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>O Despertar dos Viajantes</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    background: #111019;
+    color: #eee8df;
+    font-family: Georgia, serif;
+}
+
+.ficha {
+    max-width: 750px;
+    margin: auto;
+    padding: 25px;
+    background: #211e2b;
+    border: 1px solid #90764e;
+    border-radius: 14px;
+    box-shadow: 0 0 25px #0008;
+}
+
+h1 {
+    text-align: center;
+    color: #e2c18a;
+    font-size: 25px;
+}
+
+.subtitulo {
+    text-align: center;
+    color: #a99a83;
+    font-size: 13px;
+}
+
+h2 {
+    color: #e2c18a;
+    border-bottom: 1px solid #806b4d;
+    padding-bottom: 9px;
+    margin-top: 32px;
+    font-size: 19px;
+}
+
+p {
+    color: #bcb1a3;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+label {
+    display: block;
+    margin-top: 13px;
+    color: #d6c8b3;
+    font-size: 14px;
+}
+
+input, textarea, select {
+    width: 100%;
+    margin-top: 6px;
+    padding: 11px;
+    border-radius: 7px;
+    border: 1px solid #51485d;
+    background: #15131d;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+}
+
+input:focus, textarea:focus {
+    border-color: #d0ad72;
+}
+
+textarea {
+    min-height: 85px;
+    resize: vertical;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.atributo, .pericia {
+    padding: 12px;
+    background: #302a3b;
+    border: 1px solid #4e4359;
+    border-radius: 8px;
+}
+
+.atributo input, .pericia input {
+    text-align: center;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.contador {
+    padding: 12px;
+    margin-top: 14px;
+    border-radius: 8px;
+    background: #17151e;
+    color: #e2c18a;
+    text-align: center;
+}
+
+.aviso {
+    background: #302a3b;
+    border-left: 3px solid #c7a36c;
+    padding: 12px;
+    border-radius: 5px;
+}
+
+button {
+    width: 100%;
+    padding: 13px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 8px;
+    background: #987b50;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #b29363;
+}
+
+.secundario {
+    background: #484052;
+}
+
+.final {
+    text-align: center;
+    color: #c7a36c;
+    margin-top: 30px;
+}
+
+@media(max-width: 500px) {
+    body { padding: 8px; }
+    .ficha { padding: 15px; }
+    .grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="ficha">
+
+<h1>⚔️ O DESPERTAR DOS VIAJANTES</h1>
+<div class="subtitulo">✦ FICHA OFICIAL DE PERSONAGEM ✦</div>
+
+<h2>🪪 IDENTIDADE</h2>
+
+<label>Nome:</label>
+<input id="nome">
+
+<label>Apelido:</label>
+<input id="apelido">
+
+<div class="grid">
+<div>
+<label>Idade:</label>
+<input id="idade">
+</div>
+<div>
+<label>Raça:</label>
+<input id="raca">
+</div>
+<div>
+<label>Classe:</label>
+<input id="classe">
+</div>
+<div>
+<label>Altura:</label>
+<input id="altura">
+</div>
+<div>
+<label>Peso:</label>
+<input id="peso">
+</div>
+</div>
+
+<label>Origem (Vila, Reino, Cidade etc.):</label>
+<input id="origem">
+
+<h2>📊 ATRIBUTOS BASE</h2>
+<p class="aviso">Distribua exatamente 20 pontos entre os sete atributos.</p>
+
+<div class="grid">
+
+<div class="atributo">
+<label>💪 Força (FOR)</label>
+<input class="atributo-ponto" type="number" id="for" min="0" value="0">
+</div>
+
+<div class="atributo">
+<label>🏃 Agilidade (AGI)</label>
+<input class="atributo-ponto" type="number" id="agi" min="0" value="0">
+</div>
+
+<div class="atributo">
+<label>⚔️ Técnica (TEC)</label>
+<input class="atributo-ponto" type="number" id="tec" min="0" value="0">
+</div>
+
+<div class="atributo">
+<label>🧠 Inteligência (INT)</label>
+<input class="atributo-ponto" type="number" id="int" min="0" value="0">
+</div>
+
+<div class="atributo">
+<label>❤️ Vitalidade (VIT)</label>
+<input class="atributo-ponto" type="number" id="vit" min="0" value="0">
+</div>
+
+<div class="atributo">
+<label>🔮 Espírito (ESP)</label>
+<input class="atributo-ponto" type="number" id="esp" min="0" value="0">
+</div>
+
+<div class="atributo">
+<label>🌹 Vontade (VON)</label>
+<input class="atributo-ponto" type="number" id="von" min="0" value="0">
+</div>
+
+</div>
+
+<div class="contador">
+Pontos utilizados: <span id="totalAtributos">0</span> / 20
+<br>
+<span id="avisoAtributos">Você ainda possui 20 pontos.</span>
+</div>
+
+<h2>📊 PERÍCIAS BÁSICAS</h2>
+<p class="aviso">
+Escolha três perícias com 10 pontos e duas perícias com 5 pontos.
+</p>
+
+<div class="grid">
+
+<div class="pericia">
+<label>⚔️ Luta</label>
+<select class="pericia-select" id="luta">
+<option value="0">Não escolhida</option>
+<option value="10">10 pontos</option>
+<option value="5">5 pontos</option>
+</select>
+</div>
+
+<div class="pericia">
+<label>🕵️ Crime</label>
+<select class="pericia-select" id="crime">
+<option value="0">Não escolhida</option>
+<option value="10">10 pontos</option>
+<option value="5">5 pontos</option>
+</select>
+</div>
+
+<div class="pericia">
+<label>🎯 Pontaria</label>
+<select class="pericia-select" id="pontaria">
+<option value="0">Não escolhida</option>
+<option value="10">10 pontos</option>
+<option value="5">5 pontos</option>
+</select>
+</div>
+
+<div class="pericia">
+<label>🎭 Atuação</label>
+<select class="pericia-select" id="atuacao">
+<option value="0">Não escolhida</option>
+<option value="10">10 pontos</option>
+<option value="5">5 pontos</option>
+</select>
+</div>
+
+<div class="pericia">
+<label>🌑 Furtividade</label>
+<select class="pericia-select" id="furtividade">
+<option value="0">Não escolhida</option>
+<option value="10">10 pontos</option>
+<option value="5">5 pontos</option>
+</select>
+</div>
+
+<div class="pericia">
+<label>👹 Intimidação</label>
+<select class="pericia-select" id="intimidacao">
+<option value="0">Não escolhida</option>
+<option value="10">10 pontos</option>
+<option value="5">5 pontos</option>
+</select>
+</div>
+
+<div class="pericia">
+<label>🔎 Investigação</label>
+<select class="pericia-select" id="investigacao">
+<option value="0">Não escolhida</option>
+<option value="10">10 pontos</option>
+<option value="5">5 pontos</option>
+</select>
+</div>
+
+<div class="pericia">
+<label>🌲 Sobrevivência</label>
+<select class="pericia-select" id="sobrevivencia">
+<option value="0">Não escolhida</option>
+<option value="10">10 pontos</option>
+<option value="5">5 pontos</option>
+</select>
+</div>
+
+<div class="pericia">
+<label>📚 Conhecimento</label>
+<select class="pericia-select" id="conhecimento">
+<option value="0">Não escolhida</option>
+<option value="10">10 pontos</option>
+<option value="5">5 pontos</option>
+</select>
+</div>
+
+</div>
+
+<div class="contador">
+Perícias de 10: <span id="cont10">0</span> / 3
+<br>
+Perícias de 5: <span id="cont5">0</span> / 2
+</div>
+
+<h2>✨ MAGIAS</h2>
+
+<p class="aviso">
+Magias que não estiverem disponíveis nesta ficha deverão ser aprendidas durante o RPG, por meio de grimórios, evolução de nível ou outras descobertas. Magias adicionais precisam ser conquistadas durante a aventura.
+</p>
+
+<label>🪄 Magia Fraca — Nome:</label>
+<input id="magiaFraca">
+
+<label>Descrição:</label>
+<textarea id="descFraca"></textarea>
+
+<label>🔮 Magia Média — Nome:</label>
+<input id="magiaMedia">
+
+<label>Descrição:</label>
+<textarea id="descMedia"></textarea>
+
+<h2>🎒 INVENTÁRIO</h2>
+
+<p class="aviso">
+Você pode carregar até 7 itens adicionais, além dos seus 2 equipamentos principais. Os demais itens devem ser adquiridos durante a campanha.
+</p>
+
+<label>🗡️ Item principal (Fraco):</label>
+<input id="principal">
+
+<label>🛡️ Item secundário (Médio):</label>
+<input id="secundario">
+
+<h3>🎒 Itens adicionais</h3>
+
+<div class="grid">
+<div><label>1.</label><input id="item1" readonly placeholder="Vazio"></div>
+<div><label>2.</label><input id="item2" readonly placeholder="Vazio"></div>
+<div><label>3.</label><input id="item3" readonly placeholder="Vazio"></div>
+<div><label>4.</label><input id="item4" readonly placeholder="Vazio"></div>
+<div><label>5.</label><input id="item5" readonly placeholder="Vazio"></div>
+<div><label>6.</label><input id="item6" readonly placeholder="Vazio"></div>
+<div><label>7.</label><input id="item7" readonly placeholder="Vazio"></div>
+</div>
+
+<label>💰 Dinheiro:</label>
+<input id="dinheiro" readonly>
+
+<label>🏆 Conquistas:</label>
+<input id="conquistas" readonly>
+
+<h2>📖 HISTÓRIA</h2>
+
+<label>🌑 Medos:</label>
+<textarea id="medos"></textarea>
+
+<label>🎯 Objetivos:</label>
+<textarea id="objetivos"></textarea>
+
+<label>📜 História (Opcional):</label>
+<textarea id="historia"></textarea>
+
+<button onclick="salvar()">💾 SALVAR FICHA</button>
+<button class="secundario" onclick="exportar()">📄 EXPORTAR FICHA TXT</button>
+<button class="secundario" onclick="window.print()">🖨️ IMPRIMIR FICHA</button>
+
+<div class="final">
+✦ Que sua jornada pelos mundos de Urlerin comece. ✦
+</div>
+
+</div>
+
+<script>
+const atributos = document.querySelectorAll(".atributo-ponto");
+const pericias = document.querySelectorAll(".pericia-select");
+
+function atualizarAtributos() {
+    let total = 0;
+
+    atributos.forEach(campo => {
+        let valor = Math.max(0, Number(campo.value) || 0);
+        if (valor > 20) {
+            valor = 20;
+            campo.value = 20;
+        }
+        total += valor;
+    });
+
+    document.getElementById("totalAtributos").textContent = total;
+
+    const aviso = document.getElementById("avisoAtributos");
+
+    if (total === 20) {
+        aviso.textContent = "✓ Distribuição completa!";
+    } else if (total > 20) {
+        aviso.textContent = "Você ultrapassou o limite!";
+    } else {
+        aviso.textContent = "Você ainda possui " + (20-total) + " pontos.";
+    }
+}
+
+function atualizarPericias() {
+    let dez = 0;
+    let cinco = 0;
+
+    pericias.forEach(campo => {
+        if (campo.value === "10") dez++;
+        if (campo.value === "5") cinco++;
+    });
+
+    document.getElementById("cont10").textContent = dez;
+    document.getElementById("cont5").textContent = cinco;
+
+    pericias.forEach(campo => {
+        campo.querySelectorAll("option").forEach(opcao => {
+            if (!opcao.value) return;
+
+            const valor = Number(opcao.value);
+            const quantidade = valor === 10 ? dez : cinco;
+            const limite = valor === 10 ? 3 : 2;
+
+            opcao.disabled =
+                quantidade >= limite && campo.value !== opcao.value;
+        });
+    });
+}
+
+atributos.forEach(campo => {
+    campo.addEventListener("input", atualizarAtributos);
+});
+
+pericias.forEach(campo => {
+    campo.addEventListener("change", atualizarPericias);
+});
+
+function salvar() {
+    const dados = {};
+
+    document.querySelectorAll("input, textarea, select").forEach(campo => {
+        dados[campo.id] = campo.value;
+    });
+
+    localStorage.setItem("viajantesFicha", JSON.stringify(dados));
+    alert("Ficha salva com sucesso!");
+}
+
+function carregar() {
+    const dados = JSON.parse(
+        localStorage.getItem("viajantesFicha") || "{}"
+    );
+
+    Object.keys(dados).forEach(id => {
+        const campo = document.getElementById(id);
+        if (campo) campo.value = dados[id];
+    });
+
+    atualizarAtributos();
+    atualizarPericias();
+}
+
+function exportar() {
+    let texto = "⚔️ O DESPERTAR DOS VIAJANTES\n\n";
+
+    document.querySelectorAll("input, textarea, select").forEach(campo => {
+        const label = campo.previousElementSibling;
+        const nome = label && label.tagName === "LABEL"
+            ? label.textContent
+            : campo.id;
+
+        texto += nome + ": " + campo.value + "\n";
+    });
+
+    const arquivo = new Blob([texto], {
+        type: "text/plain;charset=utf-8"
+    });
+
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(arquivo);
+    link.download = "ficha-viajante.txt";
+    URL.revokeObjectURL(link.href);
+    link.click();
+}
+
+carregar();
+</script>
+
+</body>
+
+</html>
